@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Porto → Lisbon | EuroVelo 1 Bike Trip</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+--bg:#0a0a0f;--surface:#12121a;--card:#1a1a26;--card-hover:#22222f;
+--border:#2a2a3a;--text:#e4e4ed;--text-dim:#8888a0;--text-muted:#55556a;
+--accent:#6c63ff;--accent2:#ff6b9d;--accent3:#00d4aa;--accent4:#ffa94d;
+--gradient:linear-gradient(135deg,#6c63ff,#ff6b9d);
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;min-height:100vh}
+
+/* Hero */
+.hero{padding:3rem 1.5rem 2rem;text-align:center;background:linear-gradient(180deg,#14142a 0%,var(--bg) 100%);position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle at 30% 40%,rgba(108,99,255,.08) 0%,transparent 50%),radial-gradient(circle at 70% 60%,rgba(255,107,157,.06) 0%,transparent 50%);pointer-events:none}
+.hero h1{font-size:clamp(1.8rem,5vw,3rem);font-weight:800;background:var(--gradient);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.5rem;position:relative}
+.hero .subtitle{color:var(--text-dim);font-size:1.05rem;font-weight:300;margin-bottom:.25rem}
+.hero .dates{color:var(--accent3);font-weight:600;font-size:.95rem}
+.hero .stats{display:flex;gap:2rem;justify-content:center;margin-top:1.5rem;flex-wrap:wrap}
+.stat{text-align:center}.stat .val{font-size:1.5rem;font-weight:700;color:var(--text)}.stat .lbl{font-size:.75rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.05em}
+
+/* Tabs */
+.tabs-wrap{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px)}
+.tabs{display:flex;overflow-x:auto;scrollbar-width:none;padding:.5rem 1rem;gap:.35rem;max-width:1200px;margin:0 auto}
+.tabs::-webkit-scrollbar{display:none}
+.tab{white-space:nowrap;padding:.55rem 1rem;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:500;color:var(--text-dim);background:transparent;border:1px solid transparent;transition:all .2s;flex-shrink:0;user-select:none}
+.tab:hover{color:var(--text);background:var(--card)}
+.tab.active{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:600}
+
+/* Content */
+.content{max-width:1200px;margin:0 auto;padding:1.5rem}
+.day-panel{display:none;animation:fadeIn .3s ease}
+.day-panel.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.day-header{margin-bottom:1.5rem;padding:1.5rem;background:var(--card);border-radius:16px;border:1px solid var(--border)}
+.day-header h2{font-size:1.5rem;font-weight:700;margin-bottom:.25rem}
+.day-header .route-info{color:var(--text-dim);font-size:.9rem;display:flex;gap:1.5rem;flex-wrap:wrap;margin-top:.5rem}
+.day-header .route-info span{display:flex;align-items:center;gap:.3rem}
+.day-header .ev-link{display:inline-block;margin-top:.75rem;color:var(--accent);font-size:.82rem;text-decoration:none;font-weight:500}
+.day-header .ev-link:hover{text-decoration:underline}
+
+.section-title{font-size:1.1rem;font-weight:700;margin:1.5rem 0 .75rem;display:flex;align-items:center;gap:.5rem}
+
+/* Cards grid */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:.75rem;margin-bottom:1rem}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1rem 1.15rem;transition:all .2s}
+.card:hover{background:var(--card-hover);border-color:#3a3a50;transform:translateY(-1px)}
+.card h4{font-size:.95rem;font-weight:600;margin-bottom:.35rem}
+.card p,.card li{font-size:.85rem;color:var(--text-dim);line-height:1.5}
+.card ul{list-style:none;padding:0}.card li{padding:.15rem 0}
+.card .phone{color:var(--accent3);font-size:.8rem;font-weight:500}
+.card .addr{color:var(--text-muted);font-size:.8rem}
+.card-accent{border-left:3px solid var(--accent)}
+.card-green{border-left:3px solid var(--accent3)}
+.card-orange{border-left:3px solid var(--accent4)}
+.card-pink{border-left:3px solid var(--accent2)}
+
+.tip{background:linear-gradient(135deg,rgba(108,99,255,.08),rgba(255,107,157,.05));border:1px solid rgba(108,99,255,.2);border-radius:12px;padding:1rem 1.15rem;margin:.75rem 0;font-size:.85rem;color:var(--text-dim)}
+.tip strong{color:var(--accent)}
+
+/* Overview specific */
+.budget-table{width:100%;border-collapse:collapse;margin:.75rem 0;font-size:.85rem}
+.budget-table th,.budget-table td{padding:.6rem .8rem;text-align:left;border-bottom:1px solid var(--border)}
+.budget-table th{color:var(--text-muted);font-weight:500;font-size:.75rem;text-transform:uppercase}
+.budget-table td{color:var(--text-dim)}
+.budget-table tr:last-child td{border:none;font-weight:700;color:var(--text)}
+
+.route-overview{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:.5rem}
+.route-day{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;cursor:pointer;transition:all .2s}
+.route-day:hover{border-color:var(--accent);background:var(--card-hover)}
+.route-day .d-label{font-weight:600;font-size:.85rem;margin-bottom:.15rem}
+.route-day .d-route{color:var(--text-dim);font-size:.8rem}
+.route-day .d-km{color:var(--accent3);font-size:.75rem;font-weight:600}
+
+@media(max-width:600px){
+.cards{grid-template-columns:1fr}
+.hero .stats{gap:1rem}
+.content{padding:1rem}
+.route-overview{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<h1>Porto → Lisbon</h1>
+<p class="subtitle">EuroVelo 1 — Atlantic Coast Route by Bike</p>
+<p class="dates">🚴 April 3–10, 2026</p>
+<div class="stats">
+<div class="stat"><div class="val">380</div><div class="lbl">Total km</div></div>
+<div class="stat"><div class="val">8</div><div class="lbl">Riding Days</div></div>
+<div class="stat"><div class="val">1</div><div class="lbl">Rest Day</div></div>
+<div class="stat"><div class="val">€30–60</div><div class="lbl">/Night</div></div>
+</div>
+</div>
+
+<div class="tabs-wrap">
+<div class="tabs" id="tabs">
+<div class="tab active" data-day="overview">📋 Overview</div>
+<div class="tab" data-day="day1">Day 1</div>
+<div class="tab" data-day="day2">Day 2</div>
+<div class="tab" data-day="day3">Day 3</div>
+<div class="tab" data-day="day4">Day 4</div>
+<div class="tab" data-day="day5">Day 5</div>
+<div class="tab" data-day="day6">Day 6</div>
+<div class="tab" data-day="day7">Day 7</div>
+<div class="tab" data-day="day8">Day 8</div>
+</div>
+</div>
+
+<div class="content">
+
+<!-- OVERVIEW -->
+<div class="day-panel active" id="overview">
+<div class="day-header">
+<h2>🗺️ Trip Overview</h2>
+<p style="color:var(--text-dim);font-size:.9rem;margin-top:.5rem">8 riding days + 1 rest day cycling the Portuguese Atlantic coast from Porto to Lisbon along EuroVelo 1. Rest day in Peniche. Mix of coastal paths, lagoons, pine forests, and historic towns. Arriving Lisbon April 10.</p>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal" target="_blank">🔗 EuroVelo 1 Portugal — Full Route Map</a>
+</div>
+
+<div class="section-title">🗓️ Daily Route Summary</div>
+<div class="route-overview">
+<div class="route-day" onclick="switchTab('day1')"><div class="d-label">Day 1 — Apr 3</div><div class="d-route">Porto → Ovar</div><div class="d-km">60 km · Section 26</div></div>
+<div class="route-day" onclick="switchTab('day2')"><div class="d-label">Day 2 — Apr 4</div><div class="d-route">Ovar → Costa Nova</div><div class="d-km">40 km · Sec 25 + part 24</div></div>
+<div class="route-day" onclick="switchTab('day3')"><div class="d-label">Day 3 — Apr 5</div><div class="d-route">Costa Nova → Figueira da Foz</div><div class="d-km">50 km · Sec 24+23</div></div>
+<div class="route-day" onclick="switchTab('day4')"><div class="d-label">Day 4 — Apr 6</div><div class="d-route">Figueira da Foz → Nazaré</div><div class="d-km">60 km · Sec 22+21+20</div></div>
+<div class="route-day" onclick="switchTab('day5')"><div class="d-label">Day 5 — Apr 7</div><div class="d-route">Nazaré → Peniche via Óbidos</div><div class="d-km">60 km · Sec 19+18</div></div>
+<div class="route-day" onclick="switchTab('day6')"><div class="d-label">Day 6 — Apr 8</div><div class="d-route">🛌 Rest Day in Peniche</div><div class="d-km">0 km</div></div>
+<div class="route-day" onclick="switchTab('day7')"><div class="d-label">Day 7 — Apr 9</div><div class="d-route">Peniche → Ericeira</div><div class="d-km">55 km · Sec 17+16</div></div>
+<div class="route-day" onclick="switchTab('day8')"><div class="d-label">Day 8 — Apr 10</div><div class="d-route">Ericeira → Lisbon</div><div class="d-km">55 km · Sec 16+15</div></div>
+</div>
+
+<div class="section-title">💰 Budget Breakdown (Estimate)</div>
+<table class="budget-table">
+<tr><th>Category</th><th>Per Day</th><th>8 Nights</th></tr>
+<tr><td>🏨 Accommodation (hostels)</td><td>€20–35</td><td>€160–280</td></tr>
+<tr><td>🍽️ Food & drink</td><td>€20–30</td><td>€160–240</td></tr>
+<tr><td>🚢 Ferries & transport</td><td>—</td><td>€15–25</td></tr>
+<tr><td>🎟️ Attractions & entries</td><td>—</td><td>€30–50</td></tr>
+<tr><td>🔧 Bike maintenance</td><td>—</td><td>€10–20</td></tr>
+<tr><td><strong>Total</strong></td><td></td><td><strong>€375–615</strong></td></tr>
+</table>
+
+<div class="tip"><strong>💡 Tip:</strong> Portuguese youth hostels (Pousadas de Juventude) are excellent value at €15–25/night for a dorm. Private rooms €30–45. Book ahead for April — it's early season but popular.</div>
+
+<div class="section-title">📦 Packing Essentials</div>
+<div class="cards">
+<div class="card card-accent"><h4>🔧 Bike Kit</h4><ul><li>Spare inner tubes (×2)</li><li>Tire levers, patch kit</li><li>Multi-tool, chain lube</li><li>Mini pump</li><li>Bungee cords / panniers</li></ul></div>
+<div class="card card-green"><h4>👕 Clothing</h4><ul><li>Padded cycling shorts</li><li>Rain jacket (April showers)</li><li>Layers — mornings are cool</li><li>Sunscreen & sunglasses</li><li>Comfortable off-bike clothes</li></ul></div>
+<div class="card card-orange"><h4>📱 Tech & Docs</h4><ul><li>Phone with offline maps</li><li>Power bank</li><li>EU health card (EHIC/GHIC)</li><li>Bike lock</li><li>Headlight & tail light</li></ul></div>
+</div>
+</div>
+
+<!-- DAY 1 -->
+<div class="day-panel" id="day1">
+<div class="day-header">
+<h2>Day 1 — Porto → Ovar</h2>
+<div class="route-info">
+<span>📏 60 km</span><span>📅 April 3, 2026</span><span>📍 EuroVelo 1 · Section 26 (with lagoon detour)</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-26" target="_blank">🔗 EuroVelo Section 26 Details</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Ovar Youth Hostel</h4>
+<p class="addr">Avenida D. Manuel I, Ovar</p>
+<p class="phone">📞 +351 256 591 832</p>
+<p>Part of Pousadas de Juventude network. Budget-friendly, bike storage available.</p>
+<a class="ev-link" href="https://www.pousadasjuventude.pt" target="_blank">pousadasjuventude.pt</a>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights & Things to Do</div>
+<div class="cards">
+<div class="card card-pink"><h4>⛪ Porto Start</h4><p>Clérigos Tower, Lello Bookstore, Ribeira district, Stock Exchange Palace, São Bento Station (azulejo tiles)</p></div>
+<div class="card card-pink"><h4>🍷 Vila Nova de Gaia</h4><p>Port Wine Cellars, Serra do Pilar Monastery — cross the Luís I Bridge for stunning views</p></div>
+<div class="card card-green"><h4>⛪ Senhor da Pedra Chapel</h4><p>Hexagonal chapel on rocks at Miramar Beach — iconic photo stop</p></div>
+<div class="card card-orange"><h4>🐦 Paramos Lagoon</h4><p>Bird Observatory — flamingos and wading birds in the coastal lagoon</p></div>
+<div class="card card-pink"><h4>🏖️ Furadouro Beach</h4><p>Sandy beach near Ovar, great for an end-of-day stroll</p></div>
+<div class="card card-green"><h4>🍰 Pão-de-Ló de Ovar</h4><p>Famous fluffy sponge cake — the local specialty. Don't leave without trying it!</p></div>
+</div>
+
+<div class="section-title">🔧 Bike Shops</div>
+<div class="cards">
+<div class="card card-orange"><h4>Garagem Paciência</h4><p class="phone">📞 +351 256 040 455</p><p>Ovar — repairs and basic parts</p></div>
+</div>
+
+<div class="tip"><strong>💡 Route tip:</strong> Mostly flat coastal riding. You'll pass through Espinho and along boardwalks. Leave Porto early to enjoy stops along the way. The lagoon detour adds beautiful scenery.</div>
+</div>
+
+<!-- DAY 2 -->
+<div class="day-panel" id="day2">
+<div class="day-header">
+<h2>Day 2 — Ovar → Costa Nova</h2>
+<div class="route-info">
+<span>📏 40 km</span><span>📅 April 4, 2026</span><span>📍 EuroVelo 1 · Section 25 + part of 24</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-25" target="_blank">🔗 Sec 25</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-24" target="_blank">Sec 24</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Aveiro Youth Hostel</h4>
+<p class="addr">Rua das Pombas, Aveiro</p>
+<p class="phone">📞 +351 234 482 233</p>
+<p>Central location, walking distance to canals and town center. Stay here and ride to Costa Nova in the morning, or stay in Costa Nova itself.</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights & Things to Do</div>
+<div class="cards">
+<div class="card card-green"><h4>🌿 São Jacinto Dunes Reserve</h4><p>Natural reserve with boardwalk trails through coastal dunes and pine forest</p></div>
+<div class="card card-pink"><h4>🚴 Torreira</h4><p>Highest bike usage per capita in all of Portugal! You'll fit right in.</p></div>
+<div class="card card-orange"><h4>🌊 Ria de Aveiro</h4><p>Stunning lagoon system — salt pans, fishing boats, and birdlife</p></div>
+<div class="card card-accent"><h4>⛴️ Ferry Crossing</h4><p>Forte da Barra ↔ São Jacinto ferry. Check schedule at moveaveiro.pt or call +351 234 380 560</p></div>
+<div class="card card-pink"><h4>🏠 Costa Nova Striped Houses</h4><p>Iconic candy-striped Palheiros (wooden houses) — the most Instagrammed spot on the coast!</p></div>
+<div class="card card-green"><h4>🚣 Aveiro Canals & Moliceiros</h4><p>Take a ride on a moliceiro boat through Aveiro's picturesque canals — the "Venice of Portugal"</p></div>
+<div class="card card-accent"><h4>🏛️ Ílhavo Maritime Museum</h4><p>Excellent museum about cod fishing history and maritime heritage — near Costa Nova</p></div>
+</div>
+
+<div class="section-title">🔧 Bike Shops</div>
+<div class="cards">
+<div class="card card-orange"><h4>Aveiro Bike Shops</h4><p>Pernalonga · Bike Zone · Biclaria · Guersan · Pabol · Zé das Bikes — multiple options in town</p></div>
+<div class="card card-orange"><h4>Murtosa Area</h4><p>CicloPedal <span class="phone">📞 +351 916 457 602</span> · Giro Café (bike-friendly stop)</p></div>
+</div>
+
+<div class="tip"><strong>⛴️ Important:</strong> Ferry crossing at Ria de Aveiro is essential for the route. Check times in advance at <a href="https://moveaveiro.pt" target="_blank" style="color:var(--accent)">moveaveiro.pt</a> — +351 234 380 560</div>
+</div>
+
+<!-- DAY 3 -->
+<div class="day-panel" id="day3">
+<div class="day-header">
+<h2>Day 3 — Costa Nova → Figueira da Foz</h2>
+<div class="route-info">
+<span>📏 50 km</span><span>📅 April 5, 2026</span><span>📍 EuroVelo 1 · Sections 24 + 23</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-24" target="_blank">🔗 Sec 24</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-23" target="_blank">Sec 23</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Figueira da Foz — Tourist Info</h4>
+<p class="addr">Avenida 25 de Abril, Figueira da Foz</p>
+<p class="phone">📞 +351 233 422 610</p>
+<p>Contact tourist office for hostel/pension recommendations in your budget. Multiple options €30–50.</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights — Through Praia de Mira</div>
+<div class="cards">
+<div class="card card-green"><h4>🏖️ Barra Lighthouse</h4><p>Tallest lighthouse in Portugal (62m). Visible from far along the coast — great morning photo stop.</p></div>
+<div class="card card-pink"><h4>🎣 Vagueira Beach</h4><p>Watch Arte Xávega — traditional ox-drawn fishing technique still practiced here</p></div>
+<div class="card card-orange"><h4>🏖️ Praia de Mira</h4><p>Charming beach village with colorful fishing boats. Praia de Mira Youth Hostel (<span class="phone">📞 +351 231 480 040</span>) available if you want to split this day.</p></div>
+<div class="card card-accent"><h4>🌿 Vela Lagoon</h4><p>Peaceful lagoon with elevated wooden walkways through wetlands</p></div>
+</div>
+
+<div class="section-title">🎯 Highlights — Approaching Figueira da Foz</div>
+<div class="cards">
+<div class="card card-green"><h4>🏖️ Cape Mondego Lighthouse</h4><p>Scenic lighthouse perched on the cape with panoramic ocean views</p></div>
+<div class="card card-pink"><h4>🏴‍☠️ Bandeira Viewpoint</h4><p>250m elevation — historical pirate lookout point! Incredible coastal panorama.</p></div>
+<div class="card card-orange"><h4>🏖️ Quiaios Beach</h4><p>Wild, unspoiled beach backed by dunes and pine forest</p></div>
+<div class="card card-accent"><h4>🌲 Leiria Pine Forest</h4><p>Ancient royal forest — trees originally planted to supply wood for Portuguese caravels</p></div>
+</div>
+
+<div class="section-title">🔧 Bike Shops</div>
+<div class="cards">
+<div class="card card-orange"><h4>Casa Biscaia</h4><p class="phone">📞 +351 233 423 048</p><p>Figueira da Foz — established bike shop for repairs and parts</p></div>
+</div>
+
+<div class="tip"><strong>💡 Route tip:</strong> A scenic day through coastal lagoons and pine forests. The route passes through Praia de Mira — good lunch stop. The final stretch into Figueira da Foz has some elevation near Cape Mondego.</div>
+</div>
+
+<!-- DAY 4 -->
+<div class="day-panel" id="day4">
+<div class="day-header">
+<h2>Day 4 — Figueira da Foz → Nazaré</h2>
+<div class="route-info">
+<span>📏 60 km</span><span>📅 April 6, 2026</span><span>📍 Sections 22 + 21 + 20</span><span>💪 Big day</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-22" target="_blank">🔗 Sec 22</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-21" target="_blank">Sec 21</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-20" target="_blank">Sec 20</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Nazaré Accommodation</h4>
+<p>Multiple options near the Nazaré Bullring area. Guesthouses and hostels €25–50/night.</p>
+<p>Check Booking.com or Hostelworld for best rates in April.</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 22 (Figueira da Foz area)</div>
+<div class="cards">
+<div class="card card-green"><h4>🌊 Mondego River Estuary</h4><p>Where the river meets the sea — beautiful marshland scenery</p></div>
+<div class="card card-orange"><h4>🏝️ Morraceira Island</h4><p>Salt marshes and rice paddies — unique landscape for coastal Portugal</p></div>
+<div class="card card-pink"><h4>⛪ Seiça Monastery</h4><p>Atmospheric ruins of a Cistercian monastery</p></div>
+<div class="card card-accent"><h4>🏖️ Claridade Beach & River Beach of Ereira</h4><p>Two different beach vibes — ocean and river</p></div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 21 (Pine Forest)</div>
+<div class="cards">
+<div class="card card-green"><h4>🏖️ Vieira de Leiria Beach</h4><p>Laid-back fishing village beach</p></div>
+<div class="card card-pink"><h4>🌲 Bear National Forest</h4><p>Pine trees planted centuries ago to build Portuguese caravels for the Age of Discovery!</p></div>
+<div class="card card-orange"><h4>💧 Ervedeira Lagoon</h4><p>Peaceful freshwater lagoon, great for a break</p></div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 20 (approaching Nazaré)</div>
+<div class="cards">
+<div class="card card-accent"><h4>🏖️ S. Pedro de Moel</h4><p>Charming village with lighthouse, beach, and pine forest setting</p></div>
+<div class="card card-pink"><h4>🏛️ Marinha Grande Glass Museum</h4><p>Celebrating the region's centuries-old glass-making tradition</p></div>
+<div class="card card-green"><h4>🌊 Dramatic Cliffs & Dunes</h4><p>The coastline becomes increasingly dramatic as you approach Nazaré</p></div>
+</div>
+
+<div class="tip"><strong>💪 Big day alert:</strong> 60 km through pine forests and coastal villages. Start early, pack snacks, and take breaks at the beach villages. The terrain is mostly flat.</div>
+</div>
+
+<!-- DAY 5 -->
+<div class="day-panel" id="day5">
+<div class="day-header">
+<h2>Day 5 — Nazaré → Peniche via Óbidos</h2>
+<div class="route-info">
+<span>📏 60 km</span><span>📅 April 7, 2026</span><span>📍 Sections 19 + 18</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-19" target="_blank">🔗 Sec 19</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-18" target="_blank">Sec 18</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Peniche — Multiple Options</h4>
+<p>Budget hostels and guesthouses €25–50/night. Surf hostels are plentiful. You'll be here 2 nights (rest day tomorrow!) so choose well.</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 19 (Nazaré to Foz do Arelho)</div>
+<div class="cards">
+<div class="card card-pink"><h4>🌊 Nazaré Beach & Sítio</h4><p>Take the inclined funicular lift to the Sítio viewpoint before departing — jaw-dropping views</p></div>
+<div class="card card-accent"><h4>🏰 Fort of S. Miguel Arcanjo</h4><p>Iconic lookout over Praia do Norte — where the world record 26.21m wave was surfed!</p></div>
+<div class="card card-orange"><h4>🏖️ São Martinho do Porto</h4><p>Stunning shell-shaped bay — like a natural swimming pool</p></div>
+<div class="card card-green"><h4>⛰️ Salir do Porto</h4><p>Portugal's tallest sand dune at 50m! Worth the climb for the views.</p></div>
+<div class="card card-pink"><h4>🌊 Óbidos Lagoon & Atlantic Viewpoint</h4><p>Wide lagoon with scenic viewpoints along the ride</p></div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 18 (Peniche to Foz do Arelho)</div>
+<div class="cards">
+<div class="card card-accent"><h4>🏰 Óbidos</h4><p>Magical medieval walled town — walk the walls, explore the castle, drink Ginjinha (cherry liquor) from a chocolate cup!</p></div>
+<div class="card card-green"><h4>🎨 Caldas da Rainha</h4><p>Ceramics capital — quirky pottery shops, beautiful D. Carlos I Park</p></div>
+<div class="card card-orange"><h4>🏄 Supertubos Beach</h4><p>World Surf League competition venue — perfect barrels</p></div>
+<div class="card card-pink"><h4>🏰 Fortress of S. João Baptista</h4><p>On Berlengas Island — accessible by boat from Peniche (save for rest day!)</p></div>
+</div>
+
+<div class="tip"><strong>💡 Pro tip:</strong> Óbidos is a must-stop. The medieval town is ~5 km off route but absolutely worth the detour. Try Ginjinha served in an edible chocolate cup!</div>
+</div>
+
+<!-- DAY 6 -->
+<div class="day-panel" id="day6">
+<div class="day-header">
+<h2>Day 6 — Rest Day in Peniche 🛌</h2>
+<div class="route-info">
+<span>📏 0 km</span><span>📅 April 8, 2026</span><span>😴 Recovery & Exploration</span>
+</div>
+</div>
+
+<div class="section-title">🎯 Things to Do</div>
+<div class="cards">
+<div class="card card-accent"><h4>🏝️ Berlengas Island Day Trip</h4><p>UNESCO Biosphere Reserve. Take the boat from Peniche harbour (~30 min). Visit the Fortress of S. João Baptista, snorkel in crystal waters, hike the island trails. Book ahead!</p></div>
+<div class="card card-pink"><h4>🏰 Peniche Fortress</h4><p>16th-century fortress — was a political prison during the dictatorship. Now a museum with powerful exhibits.</p></div>
+<div class="card card-green"><h4>🧶 Bilros Lace</h4><p>Peniche is famous for traditional bobbin lace (Renda de Bilros). Watch artisans at work or buy handmade pieces.</p></div>
+<div class="card card-orange"><h4>🏄 Watch Surfing at Supertubos</h4><p>Walk or short ride to Supertubos — one of Europe's best beach breaks</p></div>
+<div class="card card-pink"><h4>🍽️ Seafood Day</h4><p>Peniche is a major fishing port. Treat yourself to fresh fish, caldeirada (fish stew), or percebes (barnacles).</p></div>
+</div>
+
+<div class="section-title">🔧 Bike Shops (maintenance day!)</div>
+<div class="cards">
+<div class="card card-orange"><h4>Ferbike</h4><p>Peniche — good time for a mid-trip tune-up</p></div>
+<div class="card card-orange"><h4>Sbikeshop</h4><p>Peniche — parts and repairs</p></div>
+</div>
+
+<div class="tip"><strong>🔧 Mid-trip check:</strong> Great day to inspect your bike — check tire pressure, brake pads, chain wear, and tighten bolts. Still ~110 km to Lisbon!</div>
+</div>
+
+<!-- DAY 7 -->
+<div class="day-panel" id="day7">
+<div class="day-header">
+<h2>Day 7 — Peniche → Ericeira</h2>
+<div class="route-info">
+<span>📏 55 km</span><span>📅 April 9, 2026</span><span>📍 EuroVelo 1 · Sections 17 + 16</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-17" target="_blank">🔗 Sec 17</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-16" target="_blank">Sec 16</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Santa Cruz Youth Hostel</h4>
+<p class="phone">📞 +351 261 933 588</p>
+<p>Near the beach in Santa Cruz. Budget option on the way.</p>
+</div>
+<div class="card card-accent">
+<h4>Areia Branca Youth Hostel</h4>
+<p class="phone">📞 +351 261 422 127</p>
+<p>Alternative option between Peniche and Ericeira.</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights — Section 17</div>
+<div class="cards">
+<div class="card card-pink"><h4>🦕 Dino Parque — Lourinhã</h4><p>Largest open-air dinosaur museum in Portugal! Life-size models in a forest setting. Amazing detour (~30 min off route).</p></div>
+<div class="card card-green"><h4>🏖️ Santa Cruz Beach</h4><p>Dramatic cliffs and rock formations. Great beach town for a break.</p></div>
+<div class="card card-orange"><h4>⛪ Convent of Penafirme</h4><p>Atmospheric ruins of a medieval convent near the coast</p></div>
+<div class="card card-accent"><h4>🥾 Maceira Escarpment Walkways</h4><p>Elevated walkways through dramatic cliff landscapes</p></div>
+<div class="card card-pink"><h4>⚔️ Battle of Vimeiro</h4><p>Interpretation Center — where Wellington defeated Napoleon's forces in 1808</p></div>
+<div class="card card-green"><h4>🦇 Prehistoric Caves</h4><p>Cave systems in the region with evidence of prehistoric habitation</p></div>
+</div>
+
+<div class="section-title">🎯 Highlights — Ericeira</div>
+<div class="cards">
+<div class="card card-pink"><h4>🏄 Ericeira</h4><p>World Surfing Reserve — only one in Europe! Charming fishing village with great food and surf culture.</p></div>
+<div class="card card-accent"><h4>🏡 Azenhas do Mar</h4><p>Stunning cliffside village with a natural ocean pool carved into the rocks. One of Portugal's most photographed spots.</p></div>
+</div>
+
+<div class="section-title">🔧 Bike Shops</div>
+<div class="cards">
+<div class="card card-orange"><h4>BIKESPOT & The Bike Shop</h4><p>Mafra/Ericeira area — last reliable shops before Lisbon</p></div>
+</div>
+</div>
+
+<!-- DAY 8 -->
+<div class="day-panel" id="day8">
+<div class="day-header">
+<h2>Day 8 — Ericeira → Lisbon via Sintra & Cabo da Roca 🏁</h2>
+<div class="route-info">
+<span>📏 55 km</span><span>📅 April 10, 2026</span><span>📍 Sections 16 + 15</span><span>🎉 Final day!</span>
+</div>
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-16" target="_blank">🔗 Sec 16</a> ·
+<a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-15" target="_blank">Sec 15</a>
+</div>
+
+<div class="section-title">🏨 Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>Lisbon — Multiple Options</h4>
+<p>Hostels from €20–35/night (dorm) or €40–60 (private). Alfama, Bairro Alto, and Santos are great neighborhoods. Book in advance — Lisbon is popular!</p>
+</div>
+</div>
+
+<div class="section-title">🎯 Highlights — Sintra & Cabo da Roca</div>
+<div class="cards">
+<div class="card card-accent"><h4>🏰 Sintra</h4><p>Pena Palace, Quinta da Regaleira (initiation well!), Moorish Castle — fairy-tale UNESCO town in the hills</p></div>
+<div class="card card-pink"><h4>🌍 Cabo da Roca</h4><p>Westernmost point of continental Europe! Get a certificate to prove you were here.</p></div>
+<div class="card card-green"><h4>🏰 Mafra National Palace</h4><p>Massive baroque palace & monastery — one of the largest buildings in Europe. 36,000-book library!</p></div>
+<div class="card card-orange"><h4>🎭 José Franco Village-Museum</h4><p>Miniature traditional Portuguese village — charming and quirky</p></div>
+<div class="card card-pink"><h4>🦕 Praia Grande</h4><p>Beach with real dinosaur footprints in the cliffs — 70+ million years old!</p></div>
+<div class="card card-green"><h4>🏖️ Cascais</h4><p>Elegant seaside town — great for a coffee stop on the final stretch</p></div>
+</div>
+
+<div class="section-title">🎯 Lisbon — You Made It! 🎉</div>
+<div class="cards">
+<div class="card card-accent"><h4>🏰 São Jorge Castle & Alfama</h4><p>Hilltop castle with panoramic views. Alfama's labyrinthine streets are magical at sunset.</p></div>
+<div class="card card-pink"><h4>🚋 Tram 28</h4><p>Iconic yellow tram through Lisbon's historic neighborhoods</p></div>
+<div class="card card-green"><h4>⛪ Belém Tower & Jerónimos</h4><p>Manueline masterpieces — UNESCO World Heritage. Don't miss Pastéis de Belém (custard tarts)!</p></div>
+<div class="card card-orange"><h4>🍽️ LX Factory & Time Out Market</h4><p>LX Factory for creative vibes, Time Out Market for the best of Lisbon's food scene under one roof</p></div>
+</div>
+
+<div class="section-title">🚆 Transport Notes</div>
+<div class="cards">
+<div class="card card-green"><h4>🚂 Train: Caxias → Carcavelos</h4><p>Cascais commuter line — bikes allowed outside rush hour. Useful to skip a busy section into Lisbon.</p></div>
+<div class="card card-green"><h4>⛴️ Transtejo Ferry</h4><p>If approaching from south bank, take the ferry across the Tagus to Lisbon. Scenic and practical!</p></div>
+</div>
+
+<div class="tip"><strong>🎉 Celebration tip:</strong> You just cycled ~380 km along the Atlantic coast! Treat yourself to a sunset dinner in Alfama and a pastel de nata (or five). You've earned it.</div>
+</div>
+
+</div><!-- /content -->
+
+<footer style="text-align:center;padding:2rem;color:var(--text-muted);font-size:.75rem;border-top:1px solid var(--border);margin-top:2rem">
+Porto → Lisbon · EuroVelo 1 · April 2026<br>
+Built with 🚴 and ☀️
+</footer>
+
+<script>
+function switchTab(dayId){
+document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
+document.querySelector(`[data-day="${dayId}"]`).classList.add('active');
+document.getElementById(dayId).classList.add('active');
+document.querySelector(`[data-day="${dayId}"]`).scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+window.scrollTo({top:0,behavior:'smooth'});
+}
+document.querySelectorAll('.tab').forEach(tab=>{
+tab.addEventListener('click',()=>switchTab(tab.dataset.day));
+});
+</script>
+</body>
+</html>
