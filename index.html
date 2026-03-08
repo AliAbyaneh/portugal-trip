@@ -131,7 +131,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="tabs-wrap">
 <div class="tabs" id="tabs">
 <div class="tab active" data-day="overview">📋 Overview</div>
-<div class="tab" data-day="calendar">📅 Calendar</div>
 <div class="tab" data-day="day1">Day 1</div>
 <div class="tab" data-day="day2">Day 2</div>
 <div class="tab" data-day="day3">Day 3</div>
@@ -151,6 +150,43 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <h2>🗺️ Trip Overview</h2>
 <p style="color:var(--text-dim);font-size:.9rem;margin-top:.5rem">8 riding days + 1 rest day cycling the Portuguese Atlantic coast from Porto to Lisbon along EuroVelo 1. Rest day in Peniche. Mix of coastal paths, lagoons, pine forests, and historic towns. Arriving Lisbon April 10.</p>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal" target="_blank">🔗 EuroVelo 1 Portugal — Full Route Map</a>
+</div>
+
+<div class="section-title">📅 April 2026</div>
+<div class="cal-grid">
+<div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div><div class="cal-header">Sun</div>
+<div class="cal-cell empty"></div><div class="cal-cell empty"></div>
+<div class="cal-cell flight"><div class="cal-num">1</div><div class="cal-route">✈️ YYZ → OPO</div><div class="cal-km">20:10 depart</div></div>
+<div class="cal-cell flight"><div class="cal-num">2</div><div class="cal-route">✈️ Land in Porto</div><div class="cal-km">08:05 arrive</div></div>
+<div class="cal-cell trip" onclick="switchTab('day1')"><div class="cal-num">3</div><div class="cal-route">Porto → Ovar</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day2')"><div class="cal-num">4</div><div class="cal-route">Ovar → Costa Nova</div><div class="cal-km">40 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day3')"><div class="cal-num">5</div><div class="cal-route">Costa Nova → Figueira</div><div class="cal-km">50 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day4')"><div class="cal-num">6</div><div class="cal-route">Figueira → Nazaré</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day5')"><div class="cal-num">7</div><div class="cal-route">Nazaré → Peniche</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip rest" onclick="switchTab('day6')"><div class="cal-num">8</div><div class="cal-route">🛌 Rest Day</div><div class="cal-km">Peniche</div></div>
+<div class="cal-cell trip" onclick="switchTab('day7')"><div class="cal-num">9</div><div class="cal-route">Peniche → Ericeira</div><div class="cal-km">55 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day8')"><div class="cal-num">10</div><div class="cal-route">Ericeira → Lisbon 🏁</div><div class="cal-km">55 km</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">11</div><div class="cal-route">🏙️ Lisbon</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">12</div><div class="cal-route">🏙️ Lisbon</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">13</div><div class="cal-route">🏙️ Lisbon</div></div>
+<div class="cal-cell flight"><div class="cal-num">14</div><div class="cal-route">✈️ LIS → YYZ</div><div class="cal-km">13:00 depart</div></div>
+<div class="cal-cell"><div class="cal-num">15</div></div>
+<div class="cal-cell"><div class="cal-num">16</div></div>
+<div class="cal-cell"><div class="cal-num">17</div></div>
+<div class="cal-cell"><div class="cal-num">18</div></div>
+<div class="cal-cell"><div class="cal-num">19</div></div>
+<div class="cal-cell"><div class="cal-num">20</div></div>
+<div class="cal-cell"><div class="cal-num">21</div></div>
+<div class="cal-cell"><div class="cal-num">22</div></div>
+<div class="cal-cell"><div class="cal-num">23</div></div>
+<div class="cal-cell"><div class="cal-num">24</div></div>
+<div class="cal-cell"><div class="cal-num">25</div></div>
+<div class="cal-cell"><div class="cal-num">26</div></div>
+<div class="cal-cell"><div class="cal-num">27</div></div>
+<div class="cal-cell"><div class="cal-num">28</div></div>
+<div class="cal-cell"><div class="cal-num">29</div></div>
+<div class="cal-cell"><div class="cal-num">30</div></div>
+<div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div>
 </div>
 
 <div class="section-title">🗓️ Daily Route Summary</div>
@@ -183,55 +219,6 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="card card-accent"><h4>🔧 Bike Kit</h4><ul><li>Spare inner tubes (×2)</li><li>Tire levers, patch kit</li><li>Multi-tool, chain lube</li><li>Mini pump</li><li>Bungee cords / panniers</li></ul></div>
 <div class="card card-green"><h4>👕 Clothing</h4><ul><li>Padded cycling shorts</li><li>Rain jacket (April showers)</li><li>Layers — mornings are cool</li><li>Sunscreen & sunglasses</li><li>Comfortable off-bike clothes</li></ul></div>
 <div class="card card-orange"><h4>📱 Tech & Docs</h4><ul><li>Phone with offline maps</li><li>Power bank</li><li>EU health card (EHIC/GHIC)</li><li>Bike lock</li><li>Headlight & tail light</li></ul></div>
-</div>
-</div>
-
-<!-- CALENDAR -->
-<div class="day-panel" id="calendar">
-<div class="day-header">
-<h2>📅 April 2026</h2>
-<p style="color:var(--text-dim);font-size:.9rem;margin-top:.5rem">Trip days highlighted — click any to see details</p>
-</div>
-<div class="cal-month-title">April 2026</div>
-<div class="cal-grid">
-<div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div><div class="cal-header">Sun</div>
-<!-- Week 1: Apr 1 (Wed) - Apr 5 (Sun) -->
-<div class="cal-cell empty"></div><div class="cal-cell empty"></div>
-<div class="cal-cell flight"><div class="cal-num">1</div><div class="cal-route">✈️ YYZ → OPO</div><div class="cal-km">20:10 depart</div></div>
-<div class="cal-cell flight"><div class="cal-num">2</div><div class="cal-route">✈️ Land in Porto</div><div class="cal-km">08:05 arrive</div></div>
-<div class="cal-cell trip" onclick="switchTab('day1')"><div class="cal-num">3</div><div class="cal-route">Porto → Ovar</div><div class="cal-km">60 km</div></div>
-<div class="cal-cell trip" onclick="switchTab('day2')"><div class="cal-num">4</div><div class="cal-route">Ovar → Costa Nova</div><div class="cal-km">40 km</div></div>
-<div class="cal-cell trip" onclick="switchTab('day3')"><div class="cal-num">5</div><div class="cal-route">Costa Nova → Figueira</div><div class="cal-km">50 km</div></div>
-<!-- Week 2: Apr 6-12 -->
-<div class="cal-cell trip" onclick="switchTab('day4')"><div class="cal-num">6</div><div class="cal-route">Figueira → Nazaré</div><div class="cal-km">60 km</div></div>
-<div class="cal-cell trip" onclick="switchTab('day5')"><div class="cal-num">7</div><div class="cal-route">Nazaré → Peniche</div><div class="cal-km">60 km</div></div>
-<div class="cal-cell trip rest" onclick="switchTab('day6')"><div class="cal-num">8</div><div class="cal-route">🛌 Rest Day</div><div class="cal-km">Peniche</div></div>
-<div class="cal-cell trip" onclick="switchTab('day7')"><div class="cal-num">9</div><div class="cal-route">Peniche → Ericeira</div><div class="cal-km">55 km</div></div>
-<div class="cal-cell trip" onclick="switchTab('day8')"><div class="cal-num">10</div><div class="cal-route">Ericeira → Lisbon 🏁</div><div class="cal-km">55 km</div></div>
-<div class="cal-cell lisbon"><div class="cal-num">11</div><div class="cal-route">🏙️ Lisbon</div></div>
-<div class="cal-cell lisbon"><div class="cal-num">12</div><div class="cal-route">🏙️ Lisbon</div></div>
-<!-- Week 3: Apr 13-19 -->
-<div class="cal-cell lisbon"><div class="cal-num">13</div><div class="cal-route">🏙️ Lisbon</div></div>
-<div class="cal-cell flight"><div class="cal-num">14</div><div class="cal-route">✈️ LIS → YYZ</div><div class="cal-km">13:00 depart</div></div>
-<div class="cal-cell"><div class="cal-num">15</div></div>
-<div class="cal-cell"><div class="cal-num">16</div></div>
-<div class="cal-cell"><div class="cal-num">17</div></div>
-<div class="cal-cell"><div class="cal-num">18</div></div>
-<div class="cal-cell"><div class="cal-num">19</div></div>
-<!-- Week 4: Apr 20-26 -->
-<div class="cal-cell"><div class="cal-num">20</div></div>
-<div class="cal-cell"><div class="cal-num">21</div></div>
-<div class="cal-cell"><div class="cal-num">22</div></div>
-<div class="cal-cell"><div class="cal-num">23</div></div>
-<div class="cal-cell"><div class="cal-num">24</div></div>
-<div class="cal-cell"><div class="cal-num">25</div></div>
-<div class="cal-cell"><div class="cal-num">26</div></div>
-<!-- Week 5: Apr 27-30 -->
-<div class="cal-cell"><div class="cal-num">27</div></div>
-<div class="cal-cell"><div class="cal-num">28</div></div>
-<div class="cal-cell"><div class="cal-num">29</div></div>
-<div class="cal-cell"><div class="cal-num">30</div></div>
-<div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div>
 </div>
 </div>
 
