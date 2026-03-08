@@ -41,3 +41,10 @@
   - Aircraft: A330-200
   - Class: Economy (Eco Budget)
   - Non-stop
+
+- **Return:** Air Canada AC 811
+  - Depart: Tue Apr 14, 2026 — 13:00 from LIS (Terminal 1)
+  - Arrive: Tue Apr 14, 2026 — 16:15 at YYZ (Terminal 1)
+  - Aircraft: A330-300
+  - Class: Economy (S) — Aeroplan Standard Reward
+  - Non-stop, 8h 15m
