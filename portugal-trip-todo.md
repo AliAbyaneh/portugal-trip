@@ -33,3 +33,11 @@
 
 ---
 *Last updated: March 4, 2026*
+
+## Flight Details
+- **Outbound:** Air Transat TS 764
+  - Depart: Wed Apr 1, 2026 — 20:10 from YYZ (Terminal 3)
+  - Arrive: Thu Apr 2, 2026 — 08:05 at OPO (Porto)
+  - Aircraft: A330-200
+  - Class: Economy (Eco Budget)
+  - Non-stop
