@@ -80,7 +80,26 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .route-day .d-route{color:var(--text-dim);font-size:.8rem}
 .route-day .d-km{color:var(--accent3);font-size:.75rem;font-weight:600}
 
+/* Calendar */
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-top:1rem}
+.cal-header{font-size:.75rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;text-align:center;padding:.5rem 0}
+.cal-cell{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:.6rem .5rem;min-height:80px;position:relative;transition:all .2s}
+.cal-cell.empty{background:transparent;border-color:transparent}
+.cal-cell .cal-num{font-size:.85rem;font-weight:600;color:var(--text-muted);margin-bottom:.3rem}
+.cal-cell.trip{border-color:var(--accent);background:rgba(108,99,255,.1);cursor:pointer}
+.cal-cell.trip:hover{background:rgba(108,99,255,.2);transform:translateY(-2px)}
+.cal-cell.trip .cal-num{color:var(--accent)}
+.cal-cell.trip .cal-route{font-size:.65rem;color:var(--text-dim);line-height:1.3}
+.cal-cell.trip .cal-km{font-size:.6rem;color:var(--accent3);font-weight:600;margin-top:.2rem}
+.cal-cell.rest{border-color:var(--accent4);background:rgba(255,169,77,.1)}
+.cal-cell.rest:hover{background:rgba(255,169,77,.2)}
+.cal-cell.rest .cal-num{color:var(--accent4)}
+.cal-month-title{font-size:1.3rem;font-weight:700;text-align:center;margin-bottom:.5rem}
+
 @media(max-width:600px){
+.cal-cell{min-height:60px;padding:.4rem .3rem}
+.cal-cell.trip .cal-route{font-size:.55rem}
+}
 .cards{grid-template-columns:1fr}
 .hero .stats{gap:1rem}
 .content{padding:1rem}
@@ -105,6 +124,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="tabs-wrap">
 <div class="tabs" id="tabs">
 <div class="tab active" data-day="overview">📋 Overview</div>
+<div class="tab" data-day="calendar">📅 Calendar</div>
 <div class="tab" data-day="day1">Day 1</div>
 <div class="tab" data-day="day2">Day 2</div>
 <div class="tab" data-day="day3">Day 3</div>
@@ -156,6 +176,55 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="card card-accent"><h4>🔧 Bike Kit</h4><ul><li>Spare inner tubes (×2)</li><li>Tire levers, patch kit</li><li>Multi-tool, chain lube</li><li>Mini pump</li><li>Bungee cords / panniers</li></ul></div>
 <div class="card card-green"><h4>👕 Clothing</h4><ul><li>Padded cycling shorts</li><li>Rain jacket (April showers)</li><li>Layers — mornings are cool</li><li>Sunscreen & sunglasses</li><li>Comfortable off-bike clothes</li></ul></div>
 <div class="card card-orange"><h4>📱 Tech & Docs</h4><ul><li>Phone with offline maps</li><li>Power bank</li><li>EU health card (EHIC/GHIC)</li><li>Bike lock</li><li>Headlight & tail light</li></ul></div>
+</div>
+</div>
+
+<!-- CALENDAR -->
+<div class="day-panel" id="calendar">
+<div class="day-header">
+<h2>📅 April 2026</h2>
+<p style="color:var(--text-dim);font-size:.9rem;margin-top:.5rem">Trip days highlighted — click any to see details</p>
+</div>
+<div class="cal-month-title">April 2026</div>
+<div class="cal-grid">
+<div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div><div class="cal-header">Sun</div>
+<!-- Week 1: Apr 1 (Wed) - Apr 5 (Sun) -->
+<div class="cal-cell empty"></div><div class="cal-cell empty"></div>
+<div class="cal-cell"><div class="cal-num">1</div></div>
+<div class="cal-cell"><div class="cal-num">2</div></div>
+<div class="cal-cell trip" onclick="switchTab('day1')"><div class="cal-num">3</div><div class="cal-route">Porto → Ovar</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day2')"><div class="cal-num">4</div><div class="cal-route">Ovar → Costa Nova</div><div class="cal-km">40 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day3')"><div class="cal-num">5</div><div class="cal-route">Costa Nova → Figueira</div><div class="cal-km">50 km</div></div>
+<!-- Week 2: Apr 6-12 -->
+<div class="cal-cell trip" onclick="switchTab('day4')"><div class="cal-num">6</div><div class="cal-route">Figueira → Nazaré</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day5')"><div class="cal-num">7</div><div class="cal-route">Nazaré → Peniche</div><div class="cal-km">60 km</div></div>
+<div class="cal-cell trip rest" onclick="switchTab('day6')"><div class="cal-num">8</div><div class="cal-route">🛌 Rest Day</div><div class="cal-km">Peniche</div></div>
+<div class="cal-cell trip" onclick="switchTab('day7')"><div class="cal-num">9</div><div class="cal-route">Peniche → Ericeira</div><div class="cal-km">55 km</div></div>
+<div class="cal-cell trip" onclick="switchTab('day8')"><div class="cal-num">10</div><div class="cal-route">Ericeira → Lisbon 🏁</div><div class="cal-km">55 km</div></div>
+<div class="cal-cell"><div class="cal-num">11</div></div>
+<div class="cal-cell"><div class="cal-num">12</div></div>
+<!-- Week 3: Apr 13-19 -->
+<div class="cal-cell"><div class="cal-num">13</div></div>
+<div class="cal-cell"><div class="cal-num">14</div></div>
+<div class="cal-cell"><div class="cal-num">15</div></div>
+<div class="cal-cell"><div class="cal-num">16</div></div>
+<div class="cal-cell"><div class="cal-num">17</div></div>
+<div class="cal-cell"><div class="cal-num">18</div></div>
+<div class="cal-cell"><div class="cal-num">19</div></div>
+<!-- Week 4: Apr 20-26 -->
+<div class="cal-cell"><div class="cal-num">20</div></div>
+<div class="cal-cell"><div class="cal-num">21</div></div>
+<div class="cal-cell"><div class="cal-num">22</div></div>
+<div class="cal-cell"><div class="cal-num">23</div></div>
+<div class="cal-cell"><div class="cal-num">24</div></div>
+<div class="cal-cell"><div class="cal-num">25</div></div>
+<div class="cal-cell"><div class="cal-num">26</div></div>
+<!-- Week 5: Apr 27-30 -->
+<div class="cal-cell"><div class="cal-num">27</div></div>
+<div class="cal-cell"><div class="cal-num">28</div></div>
+<div class="cal-cell"><div class="cal-num">29</div></div>
+<div class="cal-cell"><div class="cal-num">30</div></div>
+<div class="cal-cell empty"></div><div class="cal-cell empty"></div><div class="cal-cell empty"></div>
 </div>
 </div>
 
