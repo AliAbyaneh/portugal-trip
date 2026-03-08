@@ -94,6 +94,13 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .cal-cell.rest{border-color:var(--accent4);background:rgba(255,169,77,.1)}
 .cal-cell.rest:hover{background:rgba(255,169,77,.2)}
 .cal-cell.rest .cal-num{color:var(--accent4)}
+.cal-cell.flight{border-color:#38bdf8;background:rgba(56,189,248,.1)}
+.cal-cell.flight:hover{background:rgba(56,189,248,.15)}
+.cal-cell.flight .cal-num{color:#38bdf8}
+.cal-cell.flight .cal-route{color:#38bdf8}
+.cal-cell.lisbon{border-color:var(--accent2);background:rgba(255,107,157,.08)}
+.cal-cell.lisbon:hover{background:rgba(255,107,157,.12)}
+.cal-cell.lisbon .cal-num{color:var(--accent2)}
 .cal-month-title{font-size:1.3rem;font-weight:700;text-align:center;margin-bottom:.5rem}
 
 @media(max-width:600px){
@@ -190,8 +197,8 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div><div class="cal-header">Sun</div>
 <!-- Week 1: Apr 1 (Wed) - Apr 5 (Sun) -->
 <div class="cal-cell empty"></div><div class="cal-cell empty"></div>
-<div class="cal-cell"><div class="cal-num">1</div></div>
-<div class="cal-cell"><div class="cal-num">2</div></div>
+<div class="cal-cell flight"><div class="cal-num">1</div><div class="cal-route">✈️ YYZ → OPO</div><div class="cal-km">20:10 depart</div></div>
+<div class="cal-cell flight"><div class="cal-num">2</div><div class="cal-route">✈️ Land in Porto</div><div class="cal-km">08:05 arrive</div></div>
 <div class="cal-cell trip" onclick="switchTab('day1')"><div class="cal-num">3</div><div class="cal-route">Porto → Ovar</div><div class="cal-km">60 km</div></div>
 <div class="cal-cell trip" onclick="switchTab('day2')"><div class="cal-num">4</div><div class="cal-route">Ovar → Costa Nova</div><div class="cal-km">40 km</div></div>
 <div class="cal-cell trip" onclick="switchTab('day3')"><div class="cal-num">5</div><div class="cal-route">Costa Nova → Figueira</div><div class="cal-km">50 km</div></div>
@@ -201,11 +208,11 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="cal-cell trip rest" onclick="switchTab('day6')"><div class="cal-num">8</div><div class="cal-route">🛌 Rest Day</div><div class="cal-km">Peniche</div></div>
 <div class="cal-cell trip" onclick="switchTab('day7')"><div class="cal-num">9</div><div class="cal-route">Peniche → Ericeira</div><div class="cal-km">55 km</div></div>
 <div class="cal-cell trip" onclick="switchTab('day8')"><div class="cal-num">10</div><div class="cal-route">Ericeira → Lisbon 🏁</div><div class="cal-km">55 km</div></div>
-<div class="cal-cell"><div class="cal-num">11</div></div>
-<div class="cal-cell"><div class="cal-num">12</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">11</div><div class="cal-route">🏙️ Lisbon</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">12</div><div class="cal-route">🏙️ Lisbon</div></div>
 <!-- Week 3: Apr 13-19 -->
-<div class="cal-cell"><div class="cal-num">13</div></div>
-<div class="cal-cell"><div class="cal-num">14</div></div>
+<div class="cal-cell lisbon"><div class="cal-num">13</div><div class="cal-route">🏙️ Lisbon</div></div>
+<div class="cal-cell flight"><div class="cal-num">14</div><div class="cal-route">✈️ LIS → YYZ</div><div class="cal-km">13:00 depart</div></div>
 <div class="cal-cell"><div class="cal-num">15</div></div>
 <div class="cal-cell"><div class="cal-num">16</div></div>
 <div class="cal-cell"><div class="cal-num">17</div></div>

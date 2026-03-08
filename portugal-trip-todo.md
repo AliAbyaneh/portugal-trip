@@ -11,8 +11,8 @@
   - [ ] Peniche (Apr 7 + Apr 8 rest day — 2 nights)
   - [ ] Ericeira (Apr 9)
   - [ ] Lisbon (Apr 10)
-- [ ] **Call Air Transat** — bike transport policy, fees, box requirements
-- [ ] **Call Air Canada** — bike transport policy, fees, box requirements
+- [x] **Call Air Transat** — bike transport registered ✅
+- [ ] **Call Air Canada** — register bike (1-888-247-2262, 24h+ before flight)
 - [ ] **Test ride the bike** — full gear loaded, 50-60 km test day
 - [ ] **Get bike box/bag** for flight
 - [ ] **Figure out the map** — GPX routes onto Garmin Epix, offline maps
