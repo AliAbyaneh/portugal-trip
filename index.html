@@ -120,6 +120,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <h1>Porto → Lisbon</h1>
 <p class="subtitle">EuroVelo 1 — Atlantic Coast Route by Bike</p>
 <p class="dates">🚴 April 3–10, 2026</p>
+<p class="countdown" id="countdown" style="margin-top:.75rem;font-size:1.1rem;font-weight:700;color:var(--accent3)"></p>
 <div class="stats">
 <div class="stat"><div class="val">380</div><div class="lbl">Total km</div></div>
 <div class="stat"><div class="val">8</div><div class="lbl">Riding Days</div></div>
@@ -568,6 +569,17 @@ document.getElementById(dayId).classList.add('active');
 document.querySelector(`[data-day="${dayId}"]`).scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
 window.scrollTo({top:0,behavior:'smooth'});
 }
+// Countdown
+(function(){
+const dep=new Date('2026-04-01T20:10:00-04:00');
+function update(){
+const now=new Date();const diff=dep-now;const el=document.getElementById('countdown');
+if(diff<=0){el.textContent='🇵🇹 Trip is underway!';return}
+const d=Math.floor(diff/864e5);const h=Math.floor((diff%864e5)/36e5);const m=Math.floor((diff%36e5)/6e4);
+el.textContent=`✈️ ${d} day${d!==1?'s':''}, ${h}h ${m}m until departure`;
+}
+update();setInterval(update,60000);
+})();
 document.querySelectorAll('.tab').forEach(tab=>{
 tab.addEventListener('click',()=>switchTab(tab.dataset.day));
 });
