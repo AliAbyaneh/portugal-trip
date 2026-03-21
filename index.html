@@ -78,6 +78,16 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .route-day .d-route{color:var(--text-dim);font-size:.8rem}
 .route-day .d-km{color:var(--text-muted);font-size:.75rem;font-weight:500;margin-top:.2rem}
 
+/* Weather */
+.weather-bar{display:flex;align-items:center;gap:.75rem;margin-top:.75rem;padding:.65rem .85rem;background:var(--accent-dim);border:1px solid rgba(176,154,106,.18);border-radius:8px;font-size:.84rem;flex-wrap:wrap}
+.weather-bar .wx-icon{font-size:1.4rem}
+.weather-bar .wx-temp{font-weight:600;color:var(--text)}
+.weather-bar .wx-desc{color:var(--text-dim)}
+.weather-bar .wx-detail{color:var(--text-muted);font-size:.78rem}
+.weather-bar .wx-na{color:var(--text-muted);font-style:italic;font-size:.8rem}
+.wx-overview{display:flex;align-items:center;gap:.4rem;font-size:.62rem;color:var(--text-dim);margin-top:.2rem}
+.wx-overview .wx-icon{font-size:.85rem}
+
 /* Calendar */
 .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-top:1rem}
 .cal-header{font-size:.7rem;font-weight:600;color:var(--text-muted);text-transform:uppercase;text-align:center;padding:.5rem 0;letter-spacing:.05em}
@@ -295,6 +305,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <span>60 km</span><span>April 3, 2026</span><span>EuroVelo 1 · Section 26 (with lagoon detour)</span>
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-26" target="_blank">EuroVelo Section 26 Details ↗</a>
+<div class="weather-bar" id="wx-day1"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -345,6 +356,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-25" target="_blank">Sec 25 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-24" target="_blank">Sec 24 ↗</a>
+<div class="weather-bar" id="wx-day2"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -395,6 +407,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-24" target="_blank">Sec 24 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-23" target="_blank">Sec 23 ↗</a>
+<div class="weather-bar" id="wx-day3"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -451,6 +464,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-22" target="_blank">Sec 22 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-21" target="_blank">Sec 21 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-20" target="_blank">Sec 20 ↗</a>
+<div class="weather-bar" id="wx-day4"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -506,6 +520,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-19" target="_blank">Sec 19 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-18" target="_blank">Sec 18 ↗</a>
+<div class="weather-bar" id="wx-day5"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -554,6 +569,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="route-info">
 <span>0 km</span><span>April 8, 2026</span><span>Recovery & Exploration</span>
 </div>
+<div class="weather-bar" id="wx-day6"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Things to Do</div>
@@ -592,6 +608,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-17" target="_blank">Sec 17 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-16" target="_blank">Sec 16 ↗</a>
+<div class="weather-bar" id="wx-day7"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -649,6 +666,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 </div>
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-16" target="_blank">Sec 16 ↗</a> ·
 <a class="ev-link" href="https://en.eurovelo.com/ev1/portugal/section-15" target="_blank">Sec 15 ↗</a>
+<div class="weather-bar" id="wx-day8"><span class="wx-na">Loading weather…</span></div>
 </div>
 
 <div class="section-title">Accommodation</div>
@@ -726,6 +744,86 @@ update();setInterval(update,60000);
 document.querySelectorAll('.tab').forEach(tab=>{
 tab.addEventListener('click',()=>switchTab(tab.dataset.day));
 });
+
+// Weather via Open-Meteo (free, no API key)
+(function(){
+const days=[
+{id:'day1',date:'2026-04-03',city:'Ovar',lat:40.86,lon:-8.63,label:'Porto → Ovar'},
+{id:'day2',date:'2026-04-04',city:'Costa Nova',lat:40.62,lon:-8.74,label:'Ovar → Costa Nova'},
+{id:'day3',date:'2026-04-05',city:'Figueira da Foz',lat:40.15,lon:-8.86,label:'Costa Nova → Figueira'},
+{id:'day4',date:'2026-04-06',city:'Nazaré',lat:39.60,lon:-9.07,label:'Figueira → Nazaré'},
+{id:'day5',date:'2026-04-07',city:'Peniche',lat:39.36,lon:-9.38,label:'Nazaré → Peniche'},
+{id:'day6',date:'2026-04-08',city:'Peniche',lat:39.36,lon:-9.38,label:'Rest Day · Peniche'},
+{id:'day7',date:'2026-04-09',city:'Ericeira',lat:38.96,lon:-9.42,label:'Peniche → Ericeira'},
+{id:'day8',date:'2026-04-10',city:'Lisbon',lat:38.72,lon:-9.14,label:'Ericeira → Lisbon'},
+];
+const wmoIcons={0:'☀️',1:'🌤️',2:'⛅',3:'☁️',45:'🌫️',48:'🌫️',51:'🌦️',53:'🌧️',55:'🌧️',
+56:'🌨️',57:'🌨️',61:'🌧️',63:'🌧️',65:'🌧️',66:'🌨️',67:'🌨️',71:'🌨️',73:'🌨️',75:'🌨️',
+77:'🌨️',80:'🌦️',81:'🌧️',82:'🌧️',85:'🌨️',86:'🌨️',95:'⛈️',96:'⛈️',99:'⛈️'};
+const wmoText={0:'Clear sky',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Foggy',48:'Rime fog',
+51:'Light drizzle',53:'Drizzle',55:'Heavy drizzle',61:'Light rain',63:'Rain',65:'Heavy rain',
+71:'Light snow',73:'Snow',75:'Heavy snow',80:'Light showers',81:'Showers',82:'Heavy showers',
+95:'Thunderstorm',96:'Thunderstorm w/ hail',99:'Severe thunderstorm'};
+
+// Group days by unique lat/lon to minimize API calls
+const locGroups={};
+days.forEach(d=>{
+const key=`${d.lat},${d.lon}`;
+if(!locGroups[key])locGroups[key]={lat:d.lat,lon:d.lon,days:[]};
+locGroups[key].days.push(d);
+});
+
+const startDate='2026-04-03',endDate='2026-04-10';
+
+Object.values(locGroups).forEach(group=>{
+const url=`https://api.open-meteo.com/v1/forecast?latitude=${group.lat}&longitude=${group.lon}`+
+`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max`+
+`&start_date=${startDate}&end_date=${endDate}&timezone=Europe/Lisbon`;
+fetch(url).then(r=>r.json()).then(data=>{
+if(!data.daily)throw new Error('No daily data');
+const dates=data.daily.time;
+group.days.forEach(day=>{
+const idx=dates.indexOf(day.date);
+const el=document.getElementById('wx-'+day.id);
+if(idx===-1||!el)return;
+const code=data.daily.weather_code[idx];
+const hi=Math.round(data.daily.temperature_2m_max[idx]);
+const lo=Math.round(data.daily.temperature_2m_min[idx]);
+const rain=data.daily.precipitation_sum[idx];
+const wind=Math.round(data.daily.wind_speed_10m_max[idx]);
+const icon=wmoIcons[code]||'🌡️';
+const desc=wmoText[code]||'';
+el.innerHTML=`<span class="wx-icon">${icon}</span>`+
+`<span class="wx-temp">${hi}° / ${lo}°C</span>`+
+`<span class="wx-desc">${desc}</span>`+
+`<span class="wx-detail">💧 ${rain}mm · 💨 ${wind} km/h</span>`;
+// Also update overview route card
+const routeDay=document.querySelector(`.route-day[onclick="switchTab('${day.id}')"]`);
+if(routeDay){
+let wx=routeDay.querySelector('.wx-overview');
+if(!wx){wx=document.createElement('div');wx.className='wx-overview';routeDay.appendChild(wx);}
+wx.innerHTML=`<span class="wx-icon">${icon}</span> ${hi}°/${lo}° ${desc}`;
+}
+// Update calendar cell
+const calCells=document.querySelectorAll('.cal-cell.trip');
+const dayNum=parseInt(day.date.split('-')[2]);
+calCells.forEach(cell=>{
+const numEl=cell.querySelector('.cal-num');
+if(numEl&&parseInt(numEl.textContent)===dayNum){
+let wx=cell.querySelector('.wx-overview');
+if(!wx){wx=document.createElement('div');wx.className='wx-overview';cell.appendChild(wx);}
+wx.innerHTML=`<span class="wx-icon">${icon}</span>${hi}°`;
+}
+});
+});
+}).catch(()=>{
+group.days.forEach(day=>{
+const el=document.getElementById('wx-'+day.id);
+if(el)el.innerHTML='<span class="wx-na">☀️ Forecast available ~2 weeks before trip</span>';
+});
+});
+});
+})();
 </script>
 </body>
 </html>
