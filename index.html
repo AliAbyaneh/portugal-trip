@@ -776,11 +776,18 @@ locGroups[key].days.push(d);
 const startDate='2026-04-03',endDate='2026-04-10';
 
 Object.values(locGroups).forEach(group=>{
+// Try full range first, fall back to just forecast_days=16
 const url=`https://api.open-meteo.com/v1/forecast?latitude=${group.lat}&longitude=${group.lon}`+
 `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max`+
 `&start_date=${startDate}&end_date=${endDate}&timezone=Europe/Lisbon`;
+const urlFallback=`https://api.open-meteo.com/v1/forecast?latitude=${group.lat}&longitude=${group.lon}`+
+`&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max`+
+`&start_date=${startDate}&forecast_days=16&timezone=Europe/Lisbon`;
 fetch(url).then(r=>r.json()).then(data=>{
-if(!data.daily)throw new Error('No daily data');
+if(data.error)return fetch(urlFallback).then(r=>r.json());
+return data;
+}).then(data=>{
+if(!data||!data.daily||data.error)throw new Error('No daily data');
 const dates=data.daily.time;
 group.days.forEach(day=>{
 const idx=dates.indexOf(day.date);
@@ -815,6 +822,12 @@ if(!wx){wx=document.createElement('div');wx.className='wx-overview';cell.appendC
 wx.innerHTML=`<span class="wx-icon">${icon}</span>${hi}°`;
 }
 });
+});
+// Mark remaining days (not in API range yet) with fallback
+group.days.forEach(day=>{
+const idx=dates.indexOf(day.date);
+const el=document.getElementById('wx-'+day.id);
+if(idx===-1&&el)el.innerHTML='<span class="wx-na">📅 Forecast not yet available for '+day.date.slice(5)+'</span>';
 });
 }).catch(()=>{
 group.days.forEach(day=>{
