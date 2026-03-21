@@ -85,6 +85,18 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 .weather-bar .wx-desc{color:var(--text-dim)}
 .weather-bar .wx-detail{color:var(--text-muted);font-size:.78rem}
 .weather-bar .wx-na{color:var(--text-muted);font-style:italic;font-size:.8rem}
+.weather-bar .wx-toggle{margin-left:auto;cursor:pointer;font-size:.75rem;color:var(--blue);font-weight:500;user-select:none;white-space:nowrap}
+.weather-bar .wx-toggle:hover{text-decoration:underline}
+.wx-hourly{display:none;margin-top:.5rem;padding:.65rem .85rem;background:var(--card);border:1px solid var(--border);border-radius:8px;overflow-x:auto;scrollbar-width:thin}
+.wx-hourly.open{display:block}
+.wx-hourly-row{display:flex;gap:.1rem;min-width:max-content}
+.wx-hour{display:flex;flex-direction:column;align-items:center;min-width:52px;padding:.4rem .25rem;border-radius:6px;transition:background .15s}
+.wx-hour:hover{background:var(--card-hover)}
+.wx-hour .h-time{font-size:.68rem;color:var(--text-muted);font-weight:600}
+.wx-hour .h-icon{font-size:1.1rem;margin:.2rem 0}
+.wx-hour .h-temp{font-size:.78rem;font-weight:600;color:var(--text)}
+.wx-hour .h-rain{font-size:.62rem;color:var(--blue);margin-top:.1rem}
+.wx-hour .h-wind{font-size:.58rem;color:var(--text-muted)}
 .wx-overview{display:flex;align-items:center;gap:.4rem;font-size:.62rem;color:var(--text-dim);margin-top:.2rem}
 .wx-overview .wx-icon{font-size:.85rem}
 
@@ -779,14 +791,19 @@ Object.values(locGroups).forEach(group=>{
 // Try full range first, fall back to just forecast_days=16
 const url=`https://api.open-meteo.com/v1/forecast?latitude=${group.lat}&longitude=${group.lon}`+
 `&daily=weather_code,temperature_2m_max,temperature_2m_min,precipitation_sum,wind_speed_10m_max`+
+`&hourly=temperature_2m,weather_code,precipitation,wind_speed_10m`+
 `&forecast_days=16&timezone=Europe/Lisbon`;
 fetch(url).then(r=>r.json()).then(data=>{
 if(!data||!data.daily||data.error)throw new Error('No daily data');
 const dates=data.daily.time;
+const hTimes=data.hourly?data.hourly.time:[];
 group.days.forEach(day=>{
 const idx=dates.indexOf(day.date);
 const el=document.getElementById('wx-'+day.id);
-if(idx===-1||!el)return;
+if(idx===-1||!el){
+if(el)el.innerHTML='<span class="wx-na">📅 Forecast not yet available for '+day.date.slice(5)+'</span>';
+return;
+}
 const code=data.daily.weather_code[idx];
 const hi=Math.round(data.daily.temperature_2m_max[idx]);
 const lo=Math.round(data.daily.temperature_2m_min[idx]);
@@ -794,10 +811,44 @@ const rain=data.daily.precipitation_sum[idx];
 const wind=Math.round(data.daily.wind_speed_10m_max[idx]);
 const icon=wmoIcons[code]||'🌡️';
 const desc=wmoText[code]||'';
+const hourlyId='wx-hourly-'+day.id;
 el.innerHTML=`<span class="wx-icon">${icon}</span>`+
 `<span class="wx-temp">${hi}° / ${lo}°C</span>`+
 `<span class="wx-desc">${desc}</span>`+
-`<span class="wx-detail">💧 ${rain}mm · 💨 ${wind} km/h</span>`;
+`<span class="wx-detail">💧 ${rain}mm · 💨 ${wind} km/h</span>`+
+`<span class="wx-toggle" onclick="document.getElementById('${hourlyId}').classList.toggle('open');this.textContent=this.textContent==='▸ Hourly'?'▾ Hourly':'▸ Hourly'">▸ Hourly</span>`;
+// Build hourly row (7am–9pm)
+if(data.hourly){
+let hourlyDiv=document.getElementById(hourlyId);
+if(!hourlyDiv){
+hourlyDiv=document.createElement('div');
+hourlyDiv.id=hourlyId;
+hourlyDiv.className='wx-hourly';
+el.parentNode.insertBefore(hourlyDiv,el.nextSibling);
+}
+let html='<div class="wx-hourly-row">';
+for(let h=7;h<=21;h++){
+const ts=day.date+'T'+String(h).padStart(2,'0')+':00';
+const hi2=hTimes.indexOf(ts);
+if(hi2===-1)continue;
+const hTemp=Math.round(data.hourly.temperature_2m[hi2]);
+const hCode=data.hourly.weather_code[hi2];
+const hRain=data.hourly.precipitation[hi2];
+const hWind=Math.round(data.hourly.wind_speed_10m[hi2]);
+const hIcon=wmoIcons[hCode]||'🌡️';
+const hLabel=h<=12?(h+'am'):(h===12?'12pm':((h-12)+'pm'));
+const timeLabel=h<12?(h+'am'):(h===12?'12pm':((h-12)+'pm'));
+html+=`<div class="wx-hour">`+
+`<span class="h-time">${timeLabel}</span>`+
+`<span class="h-icon">${hIcon}</span>`+
+`<span class="h-temp">${hTemp}°</span>`+
+(hRain>0?`<span class="h-rain">💧${hRain}</span>`:'')+
+`<span class="h-wind">💨${hWind}</span>`+
+`</div>`;
+}
+html+='</div>';
+hourlyDiv.innerHTML=html;
+}
 // Also update overview route card
 const routeDay=document.querySelector(`.route-day[onclick="switchTab('${day.id}')"]`);
 if(routeDay){
@@ -816,12 +867,6 @@ if(!wx){wx=document.createElement('div');wx.className='wx-overview';cell.appendC
 wx.innerHTML=`<span class="wx-icon">${icon}</span>${hi}°`;
 }
 });
-});
-// Mark remaining days (not in API range yet) with fallback
-group.days.forEach(day=>{
-const idx=dates.indexOf(day.date);
-const el=document.getElementById('wx-'+day.id);
-if(idx===-1&&el)el.innerHTML='<span class="wx-na">📅 Forecast not yet available for '+day.date.slice(5)+'</span>';
 });
 }).catch(()=>{
 group.days.forEach(day=>{
