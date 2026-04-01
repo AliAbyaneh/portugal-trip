@@ -179,7 +179,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <div class="cal-header">Mon</div><div class="cal-header">Tue</div><div class="cal-header">Wed</div><div class="cal-header">Thu</div><div class="cal-header">Fri</div><div class="cal-header">Sat</div><div class="cal-header">Sun</div>
 <div class="cal-cell empty"></div><div class="cal-cell empty"></div>
 <div class="cal-cell flight"><div class="cal-num">1</div><div class="cal-route">YYZ → OPO</div><div class="cal-km">20:10 depart</div></div>
-<div class="cal-cell flight"><div class="cal-num">2</div><div class="cal-route">Land in Porto</div><div class="cal-km">08:05 arrive</div></div>
+<div class="cal-cell flight" onclick="switchTab('day0')" style="cursor:pointer"><div class="cal-num">2</div><div class="cal-route">Land in Porto</div><div class="cal-km">08:05 arrive</div></div>
 <div class="cal-cell trip" onclick="switchTab('day1')"><div class="cal-num">3</div><div class="cal-route">Porto → Ovar</div><div class="cal-km">60 km</div></div>
 <div class="cal-cell trip" onclick="switchTab('day2')"><div class="cal-num">4</div><div class="cal-route">Ovar → Costa Nova</div><div class="cal-km">40 km</div></div>
 <div class="cal-cell trip" onclick="switchTab('day3')"><div class="cal-num">5</div><div class="cal-route">Costa Nova → Figueira</div><div class="cal-km">50 km</div></div>
@@ -213,6 +213,7 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 
 <div class="section-title">Daily Route Summary</div>
 <div class="route-overview">
+<div class="route-day" onclick="switchTab('day0')" style="background:linear-gradient(135deg,#1a1a3e,#2a1a4e)"><div class="d-label">Apr 2 — Arrival</div><div class="d-route">Porto Exploration Day</div><div class="d-km">✈️ Land 08:05</div></div>
 <div class="route-day" onclick="switchTab('day1')"><div class="d-label">Day 1 — Apr 3</div><div class="d-route">Porto → Ovar</div><div class="d-km">60 km · Section 26</div></div>
 <div class="route-day" onclick="switchTab('day2')"><div class="d-label">Day 2 — Apr 4</div><div class="d-route">Ovar → Costa Nova</div><div class="d-km">40 km · Sec 25 + part 24</div></div>
 <div class="route-day" onclick="switchTab('day3')"><div class="d-label">Day 3 — Apr 5</div><div class="d-route">Costa Nova → Figueira da Foz</div><div class="d-km">50 km · Sec 24+23</div></div>
@@ -383,6 +384,91 @@ body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--t
 <tr><td colspan="2"><strong>GRAND TOTAL</strong></td><td><strong>~CA$2,045+</strong></td></tr>
 </table>
 <div class="tip"><strong>📝 Track as you go:</strong> Send me receipts or amounts and I'll update this tab. Costs in mixed currencies — CAD total is approximate.</div>
+</div>
+
+<!-- DAY 0 — PORTO ARRIVAL -->
+<div class="day-panel" id="day0">
+<div class="day-header">
+<h2>✈️ April 2 — Porto Arrival Day</h2>
+<div class="route-info">
+<span>Land 08:05</span><span>Explore Porto</span><span>Livraria Lello at 18:00</span>
+</div>
+</div>
+
+<div class="section-title">🕐 Hourly Plan</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>08:05 — Land at OPO Airport</h4>
+<p>Clear customs, grab bags & bike box. Pick up <strong>eSIM</strong> if not already activated (Airalo 20GB). Metro Line E (Violet) from airport → Trindade (~30 min, €2.50).</p>
+</div>
+<div class="card card-accent">
+<h4>09:30 — Drop Bags at Hostel</h4>
+<p><strong>The Passenger Hostel</strong> · Praça Almeida Garrett (inside São Bento Station). Leave bike box & bags — early check-in if available, otherwise luggage storage.</p>
+</div>
+<div class="card" style="border-left:3px solid #f59e0b">
+<h4>10:00 — Breakfast ☀️🍳</h4>
+<p><strong>Cielo Brunch Garden</strong> — Rated 4.9, shaded outdoor patio/garden seating. Great brunch with eggs, pancakes, açaí bowls. Near Cedofeita area.</p>
+<p style="font-size:.8rem;color:var(--text-muted)">📍 Rua de Cedofeita · ~10 min walk from São Bento</p>
+<p style="font-size:.8rem;color:var(--text-muted)"><strong>Alt:</strong> Eleven Lab — terrace seating at LOT building, Rua José Falcão. English Breakfast €12.50 (massive). Or Alto on Cedofeita St — shakshuka, creative eggs.</p>
+</div>
+<div class="card card-pink">
+<h4>11:00 — São Bento Station</h4>
+<p>You're staying here so no excuse — admire the 20,000 azulejo tiles in the main hall. One of Portugal's most beautiful train stations.</p>
+</div>
+<div class="card card-pink">
+<h4>11:30 — Clérigos Tower</h4>
+<p>Climb the 240 steps for panoramic views over Porto. ~15 min walk from São Bento. Best morning light for photos.</p>
+</div>
+<div class="card card-green">
+<h4>12:15 — Ribeira District</h4>
+<p>Walk down to the Douro riverfront. Wander the colourful medieval streets, Praça da Ribeira. UNESCO World Heritage site.</p>
+</div>
+<div class="card card-orange">
+<h4>13:00 — Lunch at Ribeira</h4>
+<p>Grab a <strong>francesinha</strong> (Porto's iconic sandwich) or fresh grilled fish at one of the riverside spots. Café Santiago is the classic francesinha spot (~€12).</p>
+</div>
+<div class="card card-pink">
+<h4>14:00 — Cross Luís I Bridge</h4>
+<p>Walk the upper deck for incredible views. Cross to <strong>Vila Nova de Gaia</strong> side.</p>
+</div>
+<div class="card card-orange">
+<h4>14:30 — Port Wine Tasting</h4>
+<p>Pick a cellar in Gaia — Taylor's, Graham's, or Sandeman. Most tastings €15-20 for 3-4 wines. Graham's has the best terrace views.</p>
+</div>
+<div class="card card-green">
+<h4>16:00 — Jardim do Morro / Chill</h4>
+<p>Relax at the hilltop garden in Gaia with views of Porto. Good spot to rest before evening plans.</p>
+</div>
+<div class="card card-accent">
+<h4>17:30 — Walk back to Centro</h4>
+<p>Cross back over the bridge, head toward Rua das Carmelitas.</p>
+</div>
+<div class="card" style="border-left:3px solid #e11d48">
+<h4>18:00 — Livraria Lello 📚</h4>
+<p>Pre-booked! €16 entry (redeemable on book purchase). One of the world's most beautiful bookshops. The neo-Gothic staircase is stunning.</p>
+<p style="font-size:.8rem;color:var(--text-muted)">📍 Rua das Carmelitas 144</p>
+</div>
+<div class="card card-pink">
+<h4>19:00 — Dinner</h4>
+<p>Head to <strong>Rua das Flores</strong> — KUG Flores has a street-side terrace, wine bar, and rooftop with views. Or go classic at <strong>Adega São Nicolau</strong> for grilled octopus by the river.</p>
+</div>
+<div class="card card-accent">
+<h4>21:00 — Night Walk / Rest</h4>
+<p>Stroll along the lit-up Douro riverfront, or crash early — you've been flying all night and cycling starts tomorrow!</p>
+</div>
+</div>
+
+<div class="section-title">Accommodation</div>
+<div class="cards">
+<div class="card card-accent">
+<h4>The Passenger Hostel ✅</h4>
+<p>Inside São Bento Station · Praça Almeida Garrett</p>
+<p style="font-size:.8rem;color:var(--text-muted)">Ref: 279606-576215172 · Hostelworld</p>
+<p style="color:var(--accent-light);font-weight:600">CA$63.06</p>
+</div>
+</div>
+
+<div class="tip"><strong>☕ Breakfast with patios near centro:</strong> Cielo Brunch Garden (garden courtyard, 4.9★), Eleven Lab (mezzanine terrace at LOT), Alto (Cedofeita), KUG Flores (street terrace + rooftop). Most open 9-10 AM.</div>
 </div>
 
 <!-- DAY 1 -->
